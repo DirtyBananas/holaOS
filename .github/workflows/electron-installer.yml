@@ -1,0 +1,88 @@
+name: Electron Installer (Windows)
+
+# Builds the holaOS Electron desktop app into a Windows NSIS installer
+# and uploads it as a downloadable artifact. This is the primary preview
+# tier for this app: there is no hosted web preview (it is a packaged
+# desktop app loaded from the local filesystem via Electron).
+#
+# Build = npm --prefix desktop run dist:win:local
+#   - prepare:runtime:local:windows  (builds the sidecar runtime from source)
+#   - prepare:packaged-config
+#   - build (vite renderer + tsup electron main)
+#   - electron-builder --win nsis --x64  (NSIS installer, unsigned)
+# Native dep better-sqlite3 is rebuilt for Electron via @electron/rebuild,
+# which the dist script invokes automatically.
+
+on:
+  push:
+    branches: [main, claude/repo-organization-artifacts-tnwgtb]
+  workflow_dispatch:
+
+jobs:
+  windows-installer:
+    name: Build Windows NSIS installer
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Install dependencies
+        run: npm install --prefix desktop
+
+      - name: Build Windows installer (unsigned)
+        run: npm --prefix desktop run dist:win:local
+        env:
+          # Disable electron-builder code signing; this is an unsigned build.
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: holaos-windows-installer
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            desktop/release/**/*.exe
+            desktop/dist/**/*.exe
+            desktop/dist-electron/**/*.exe
+            desktop/out/**/*.exe
+            desktop/build/**/*.exe
+
+  renderer-fallback:
+    name: Renderer compile check (fallback)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Install dependencies
+        run: npm install --prefix desktop
+
+      # Lightweight proof the Vite renderer compiles, independent of the
+      # native electron-builder packaging path. Output: desktop/out
+      - name: Build renderer only
+        run: npm --prefix desktop run build:renderer
+
+      - name: Upload renderer build
+        uses: actions/upload-artifact@v4
+        with:
+          name: holaos-renderer-build
+          if-no-files-found: warn
+          retention-days: 7
+          path: desktop/out
