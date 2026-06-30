@@ -12,6 +12,11 @@ name: Electron Installer (Windows)
 #   - electron-builder --win nsis --x64  (NSIS installer, unsigned)
 # Native dep better-sqlite3 is rebuilt for Electron via @electron/rebuild,
 # which the dist script invokes automatically.
+#
+# The build produces a downloadable ARTIFACT only; it does NOT publish a
+# GitHub Release. electron-builder is invoked with `--publish never` (the
+# dist:win:local script forwards extra args to electron-builder via
+# scripts/run-electron-builder.mjs).
 
 on:
   push:
@@ -38,10 +43,13 @@ jobs:
         run: npm install --prefix desktop
 
       - name: Build Windows installer (unsigned)
-        run: npm --prefix desktop run dist:win:local
+        run: npm --prefix desktop run dist:win:local -- --publish never
         env:
           # Disable electron-builder code signing; this is an unsigned build.
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
+          # Provided so electron-builder never errors on a missing publish
+          # token. We pass `--publish never` so nothing is actually published.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@v4
