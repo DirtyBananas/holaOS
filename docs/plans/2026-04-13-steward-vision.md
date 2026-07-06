@@ -11,8 +11,8 @@ The dominant story about digital overload is that we have too much stuff. That s
 Information lives along three axes:
 
 - **Channel**: notes apps, AI chat transcripts, email, iMessage, Dropbox, browser history, local files, terminals, voice memos, screenshots. Call it ten, in practice.
-- **Context**: work and personal, at minimum. Often more.
-- **Time**: what's live right now, what's from last month, and the decade of sediment underneath.
+- **Context**: work and personal, at minimum. Often more — side projects, family, hobbies.
+- **Time**: what is live right now, what is from last month, and the decade of sediment underneath.
 
 Ten channels times two contexts times three time strata is roughly **sixty possible locations** for any single item. The cost of adding a new channel is not additive, it is multiplicative: every new place you can put something multiplies every future lookup.
 
@@ -24,13 +24,13 @@ Steward exists to collapse that cost.
 
 ### Storage without retrieval
 
-Every second-brain app, every LLM chat history, every cloud drive, is optimized for the wrong half of the problem. They preserve everything and surface almost nothing. They are **landfills with a search bar**. A chat transcript is not a memory; it is a pile. The test of memory is whether the right thing shows up at the right moment without you having to phrase a query for it. On that test, nothing currently ships.
+Every second-brain app, every LLM chat history, every cloud drive is optimized for the wrong half of the problem. They preserve everything and surface almost nothing. They are **landfills with a search bar**. A chat transcript is not a memory; it is a pile. The test of memory is whether the right thing shows up at the right moment without you having to phrase a perfect query for it. On that test, nothing currently ships.
 
 This is the core indictment: **the industry delivers storage without retrieval**, then calls it memory.
 
 ### Organization and retrieval are opposites
 
-The second failure is a category error baked into almost every "productivity system" ever sold. **Organization is front-loaded work** — taxonomy, tagging, folders, decisions at save time about how future-you will want to search. It always fails, because you cannot predict future-you's query. **Retrieval is lazy** — no work at save time, cost paid only when a real need surfaces. These are not complements. They are opposites. Effort spent on organization is effort not spent on retrieval, and the trade is bad.
+The second failure is a category error baked into almost every productivity system ever sold. **Organization is front-loaded work** — taxonomy, tagging, folders, decisions at save time about how future-you will want to search. It always fails, because you cannot predict future-you's query. **Retrieval is lazy** — no work at save time, cost paid only when a real need surfaces. These are not complements. They are opposites. Effort spent on organization is effort not spent on retrieval, and the trade is bad.
 
 Steward's bet: **if retrieval is good enough, organization becomes unnecessary.** Optimize for the lazy side of the dichotomy and the front-loaded side withers away on its own.
 
@@ -50,7 +50,7 @@ There are two psychologies around accumulation and they need completely differen
 
 Steward is built for prospectors. The explicit test: when old information resurfaces, does the user feel relief or dread? If relief, Steward is for them. If dread, they should use a different tool, probably a trash can.
 
-And — one more thing worth naming directly. The "trust the fade" advice that surrounds memory tools is **cope dressed as wisdom**. Fallible memory is a hardware limitation, not a virtue. Every external memory technology humans have ever invented — writing, libraries, search engines, Evernote, LLMs — is a chip off the same desire for photographic recall. Wanting total recall is rational, not greedy. The reason it has not been delivered is not that it was wrong to want; it is that the tools keep delivering storage and calling it memory.
+The desire for total recall is not greedy — it is rational. Fallible memory is a hardware limitation, not a virtue. Every external memory technology humans have ever invented — writing, libraries, search engines, Evernote, LLMs — is a chip off the same desire for photographic recall. The reason it has not been delivered is not that it was wrong to want; it is that the tools keep delivering storage and calling it memory.
 
 ## Core Principles
 
@@ -63,7 +63,7 @@ Steward is defined as much by what it refuses as by what it builds.
 - **Append-only.** Never destructive. Never reorganizes source data. History is sacred.
 - **Citations always.** Every retrieved answer cites its source with a click-through to the original. No black-box recall.
 - **Inspectable.** Every layer — the index, the embeddings, the traces, the logs — is just files a human can open.
-- **Frictionless capture.** If logging an item takes more than ten seconds, capture is broken and the layer is wrong.
+- **Frictionless capture.** If logging an item takes more than ten seconds, capture is broken.
 - **Earn each step.** Do not build Layer N until Layer N-1 has stuck as a habit. No speculative scaffolding.
 
 These are not preferences. They are the load-bearing walls.
@@ -84,7 +84,7 @@ Three categories describe the problem space, and only one is open.
 
 That is Steward's seat at the table: **the integration layer that respects existing tools.**
 
-A general-purpose version of this is a research problem — it has to compromise for users it does not know. A **personal** version, shaped exactly to one builder's channels, habits, and editor of choice, is a weekend project that compounds. Steward is the personal version, built first for one prospector, designed so its principles generalize later if they want to.
+A general-purpose version of this is a research problem — it has to compromise for users it does not know. A personal version, shaped exactly to one builder's channels, habits, and editor of choice, is a weekend project that compounds. Steward is the personal version, built first for one prospector, designed so its principles generalize later if they want to.
 
 ## Layer 0: The Prospector Log
 
@@ -100,8 +100,6 @@ The prospector log is not a note-taking surface. It is a **human-judgment layer*
 
 > **The prospector log is the signal. The automation is the plumbing.**
 
-This is the philosophical anchor. It is why Steward will never be a heavy tool. A vision built on a three-field text file cannot drift into becoming a walled garden, because there is no garden — there is a text file, and then a pile of adapters that respect it. If Layer 0 does not stick as a daily habit, no higher layer is worth building. If it does stick, every higher layer is an obvious extension of it.
-
-That is the whole program. Meet the data where it lives. Optimize for retrieval, not organization. Serve prospectors, not minimalists. Trust a plain-text file as the system of record. Build integration, not another place to put things. Earn each layer before building the next.
+This is the philosophical anchor. A vision built on a three-field text file cannot drift into becoming a walled garden, because there is no garden — there is a text file, and then a pile of adapters that respect it. If Layer 0 does not stick as a daily habit, no higher layer is worth building. If it does stick, every higher layer is an obvious extension of it.
 
 Everything else in the spec — requirements, architecture, implementation, risks — is downstream of this.
